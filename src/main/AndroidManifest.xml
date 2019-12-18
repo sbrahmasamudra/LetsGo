@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.letsgo">
+    <uses-permission android:name="android.permission.INTERNET" /> <!-- From your app to Branch's backend-->
+    <application
+        android:label="LetsGo"
+        android:allowBackup="true"
+        android:name="io.branch.referral.BranchApp"
+        android:theme="@style/Theme.AppCompat">
+
+        <!-- Added the android:required:false because of a runtime error: INSTALL_FAILED_MISSING_SHARED_LIBRARY-->
+        <uses-library android:name="com.google.android.things" android:required="false"/>
+        <uses-library android:name="com.google.android.maps" android:required="false"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="LetsGo"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Branch URI scheme -->
+            <intent-filter>
+                <data android:scheme="branchsters" android:host="open" />
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+            <!-- Branch App Links -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="https" android:host="t7awp.app.link" />
+            </intent-filter>
+        </activity>
+        <!-- Branch init -->
+        <meta-data android:name="io.branch.sdk.BranchKey" android:value="key_live_gmKRpWpE83GSm3vCYZ1f0lcayCcc4XYp"/>
+        <!-- Branch install referrer tracking (optional) -->
+        <receiver android:name="io.branch.referral.InstallListener" android:exported="true">
+            <intent-filter>
+                <action android:name="com.android.vending.INSTALL_REFERRER" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>
